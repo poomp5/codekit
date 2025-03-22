@@ -15,7 +15,7 @@ export default function SolutionOverView() {
           Ensome in numbers
           <hr className="mt-2 border-b-3 border-primary w-[95px]" />
         </h1>
-        <div className="max-w-6xl mx-auto flex flex-wrap justify-between font-open-sans">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 justify-between font-open-sans">
           {stats.map((stat, index) => (
             <div
               key={index}

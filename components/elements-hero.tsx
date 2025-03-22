@@ -7,7 +7,7 @@ const ElementsHero = () => {
         <div className="max-w-[540px] space-y-[35px] shrink-0">
           <div className="space-y-[30px]">
             <h1 className="text-3xl md:text-[48px] font-manrope font-extrabold">
-              Find true power in your data with{" "}
+              Find true power in your data with
               <span className="text-primary">Ensome</span>
             </h1>
           </div>
