@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+const Navbar = dynamic(() => import("@/components/navbar"));
+
+import { fontManrope, fontOpenSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import { fontIbmThai } from "@/lib/fonts";
 import { ThemeProvider } from "@/providers/theme-provider";
+import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Codekit",
@@ -16,11 +18,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(fontIbmThai.style, "flex flex-col h-svh antialiased")}
+        className={cn(
+          fontManrope.variable,
+          fontOpenSans.variable,
+          "flex flex-col h-svh antialiased"
+        )}
       >
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          forcedTheme="light"
+          disableTransitionOnChange
+        >
+          <Navbar />
           <main className="flex-1">{children}</main>
         </ThemeProvider>
       </body>

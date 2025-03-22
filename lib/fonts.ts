@@ -1,6 +1,12 @@
-import {IBM_Plex_Sans_Thai } from "next/font/google"
+import { Manrope, Open_Sans } from "next/font/google";
 
-export const fontIbmThai = IBM_Plex_Sans_Thai({
-    weight: ["400", "500", "600", "700", ],
-    subsets: ["thai"],
-})
+export const fontManrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+});
+
+export const fontOpenSans = Open_Sans({
+  variable: "--font-open-sans",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+});
