@@ -1,11 +1,10 @@
-import ClientLogo from "@/components/clients-logo";
 import dynamic from "next/dynamic";
 
 const SolutionContactUs = dynamic(
   () => import("@/components/solution-contact-us")
 );
 const SectionBlog = dynamic(() => import("@/components/section-blog"));
-
+const ClientLogo = dynamic(() => import("@/components/clients-logo"));
 const Footer = dynamic(() => import("@/components/footer"));
 const Subscribe = dynamic(() => import("@/components/subscribe"));
 const SolutionHero = dynamic(() => import("@/components/solution-hero"));

@@ -1,6 +1,6 @@
-import ClientLogo from "@/components/clients-logo";
 import dynamic from "next/dynamic";
 
+const ClientLogo = dynamic(() => import("@/components/clients-logo"));
 const Features = dynamic(() => import("@/components/features"));
 const OverView = dynamic(() => import("@/components/overview"));
 const Hero = dynamic(() => import("@/components/hero"));
@@ -14,7 +14,6 @@ const Review = dynamic(() => import("@/components/review"));
 export default function Home() {
   return (
     <div>
-
       <Hero />
       <ClientLogo />
       <Advantages />

@@ -2,7 +2,9 @@ import dynamic from "next/dynamic";
 
 const ElementsHero = dynamic(() => import("@/components/elements-hero"));
 const ElementsPrice = dynamic(() => import("@/components/elements-price"));
-const ElementsOverView = dynamic(() => import("@/components/elements-overview"));
+const ElementsOverView = dynamic(
+  () => import("@/components/elements-overview")
+);
 const Benefits = dynamic(() => import("@/components/benefits"));
 const ElementsFeatures = dynamic(
   () => import("@/components/elements-features")

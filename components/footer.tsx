@@ -1,15 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react"; // Assuming you're using lucide for icons
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { Icons } from "./icons";
 import { SectionContainer } from "./section-container";
 
-const footer = [
+const footerSections = [
   {
     title: "About",
     sub: ["Home", "About Us", "Services", "Solution"],
@@ -26,8 +27,9 @@ const footer = [
 
 const socialIcons = Object.values(Icons.Social);
 
-const FooterMobile = () => {
+const FooterMobile = ({ pathname }: { pathname: string }) => {
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const isHomePage = pathname === "/";
 
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
@@ -47,7 +49,7 @@ const FooterMobile = () => {
         onClick={() => toggleSection(id)}
         className="flex justify-between items-center w-full py-4 text-left"
       >
-        <h3 className="text-base text-white font-normal">{title}</h3>
+        <h3 className="text-base font-normal">{title}</h3>
         <ChevronDown
           className={`w-5 h-5 transition-transform ${
             openSection === id ? "rotate-180" : ""
@@ -65,15 +67,27 @@ const FooterMobile = () => {
   );
 
   return (
-    <footer className="bg-secondary text-sm">
+    <footer
+      className={cn(
+        isHomePage
+          ? "bg-background *:text-c-black"
+          : "bg-secondary *:text-tertiary",
+        "text-sm"
+      )}
+    >
       <SectionContainer className="space-y-4">
         <Image
           className="size-fit"
-          src="/images/publicity/logo_blue.png"
+          src={
+            isHomePage
+              ? "/images/publicity/logo_blue.png"
+              : "/images/publicity/logo_white.png"
+          }
           width={180}
           height={108}
           alt="logo"
         />
+
         <FooterSection title="Quick link" id="quick-links">
           <ul className="space-y-2">
             <li>
@@ -118,21 +132,36 @@ const FooterMobile = () => {
         </FooterSection>
 
         <div className="mt-8 flex justify-between items-center">
-          <h1 className="font-manrope font-bold text-base text-white">Follow us</h1>
+          <h1
+            className={cn(
+              "font-manrope font-bold text-base",
+              !isHomePage && "text-tertiary"
+            )}
+          >
+            Follow us
+          </h1>
           <div className="flex gap-[15px]">
             {socialIcons.map((Icon, index) => (
-              <Icon key={index} className="*:fill-c-background size-[25px]" />
+              <Icon
+                key={index}
+                className={cn(
+                  isHomePage ? "*:fill-primary" : "*:fill-background",
+                  "size-[25px]"
+                )}
+              />
             ))}
           </div>
         </div>
 
-        <div className="mt-6 flex justify-start text-tertiary font-open-sans space-x-4 text-xs opacity-80 ">
-          <Link href="/privacy">Privacy policy</Link>
-          <Link href="/terms">Terms of use</Link>
-        </div>
+        <div className={cn(isHomePage ? "text-c-black" : "text-tertiary")}>
+          <div className="mt-6 flex justify-start font-open-sans space-x-4 text-xs opacity-80">
+            <Link href="/privacy">Privacy policy</Link>
+            <Link href="/terms">Terms of use</Link>
+          </div>
 
-        <div className="mt-4 text-start text-xs text-tertiary  font-open-sans">
-          Ensome© 2022 All Rights Reserved
+          <div className="mt-4 text-start text-xs font-open-sans">
+            Ensome© 2022 All Rights Reserved
+          </div>
         </div>
       </SectionContainer>
     </footer>
@@ -151,7 +180,7 @@ const FooterMain = () => {
           alt="logo"
         />
         <div className="flex gap-28">
-          {footer.map((item, index) => (
+          {footerSections.map((item, index) => (
             <div key={index} className="flex flex-col space-y-4">
               <h1 className="font-manrope text-base font-bold">{item.title}</h1>
               <div className="font-open-sans flex flex-col space-y-4 text-sm">
@@ -199,7 +228,7 @@ const FooterMain = () => {
 
       <div className="flex justify-between">
         <div className="font-manrope flex gap-[15px] text-c-gray">
-          <div className="font-semibold flex items-center gap-[4px] ">
+          <div className="font-semibold flex items-center gap-[4px]">
             <span>Privacy policy</span>
             <Icons.arrowRight className="stroke-c-gray" />
           </div>
@@ -209,7 +238,7 @@ const FooterMain = () => {
           </div>
         </div>
 
-        <p className="font-open-sans text-sm text-c-gstroke-c-gray">
+        <p className="font-open-sans text-sm text-c-gray">
           © 2022 Ensome. All Rights Reserved.
         </p>
       </div>
@@ -253,15 +282,10 @@ const Solution = () => {
               Ut enim ad minima veniam, quis nostrum exercitationem ullam
               corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.
             </p>
-            <div className="space-y-[15px]">
-              <div className="flex gap-[15px]">
-                {socialIcons.map((Icon, index) => (
-                  <Icon
-                    key={index}
-                    className="*:fill-c-background size-[25px]"
-                  />
-                ))}
-              </div>
+            <div className="flex gap-[15px]">
+              {socialIcons.map((Icon, index) => (
+                <Icon key={index} className="*:fill-c-background size-[25px]" />
+              ))}
             </div>
           </div>
 
@@ -271,9 +295,7 @@ const Solution = () => {
             <h1 className="font-manrope text-base font-bold">Quick Link</h1>
             <ul className="font-open-sans space-y-2.5 text-sm">
               {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <h2>{link}</h2>
-                </li>
+                <li key={index}>{link}</li>
               ))}
             </ul>
           </div>
@@ -282,9 +304,7 @@ const Solution = () => {
             <h1 className="font-manrope text-base font-bold">Service</h1>
             <ul className="font-open-sans space-y-2.5 text-sm">
               {serviceLinks.map((link, index) => (
-                <li key={index}>
-                  <h2>{link}</h2>
-                </li>
+                <li key={index}>{link}</li>
               ))}
             </ul>
           </div>
@@ -319,21 +339,21 @@ const Solution = () => {
 
 const Footer = () => {
   const pathname = usePathname();
-  const IsSolutionPage = pathname === "/solution";
-  const IsElementPage = pathname === "/elements";
+  const isSolutionPage = pathname === "/solution";
+  const isElementPage = pathname === "/elements";
 
   return (
     <div
       className={cn(
-        IsSolutionPage ? "bg-secondary" : "bg-c-background",
+        isSolutionPage ? "bg-secondary" : "bg-c-background",
         "w-full"
       )}
     >
       <div className="not-sm:hidden">
-        {IsSolutionPage || IsElementPage ? <Solution /> : <FooterMain />}
+        {isSolutionPage || isElementPage ? <Solution /> : <FooterMain />}
       </div>
       <div className="sm:hidden">
-        <FooterMobile />
+        <FooterMobile pathname={pathname} />
       </div>
     </div>
   );
